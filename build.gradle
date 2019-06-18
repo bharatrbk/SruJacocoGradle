@@ -11,6 +11,7 @@ plugins {
     id 'java-library'
     id 'application'
     id 'jacoco'
+    id "org.sonarqube" version "2.7.1"
 }
 
 repositories {
@@ -30,3 +31,18 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 mainClassName='SruthiGradleJacoco.Library'
+test{
+testLogging{
+exceptionFormat = 'full'
+events = ["passed", "failed", "skipped"]
+}
+finalizedBy jacocoTestReport
+}
+jacocoTestReport {
+group = "build"
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
